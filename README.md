@@ -2,13 +2,13 @@
 
 <div align="center">
 
-<img src="docs/img/01-hero-banner.png" alt="Prospects Digital — engineering case study: a 389,000-SKU marketplace that loads like a landing page" width="900">
+<img src="docs/img/01-hero-banner.png" alt="OPTTOYSCHINA LLP — engineering case study: a 389,000-SKU marketplace that loads like a landing page" width="900">
 
 <br><br>
 
 # A 389,000‑SKU marketplace that feels like a landing page
 
-**An engineering case study by Prospects Digital** — measured, reproducible, and a little obsessive.
+**An engineering case study by OPTTOYSCHINA LLP** — measured, reproducible, and a little obsessive.
 
 <br>
 
@@ -48,7 +48,7 @@
 - [📏 How we measure (the audit, not the anecdote)](#-how-we-actually-measure-the-audit-not-the-anecdote)
 - [📊 Results at a glance](#-results-at-a-glance)
 - [⚡ Postscript: shipping 91 to 96 in one day](#-postscript-shipping-91-to-96-in-one-day)
-- [🤝 Want a system like this?](#-want-a-system-like-this-work-with-prospects-digital)
+- [🤝 Want a system like this?](#-want-a-system-like-this-work-with-opttoyschina-llp)
 
 ---
 
@@ -438,7 +438,7 @@ When we first published this case study, Google's mobile score was **91** — LC
 
 ---
 
-## 🤝 Want a system like this? Work with Prospects Digital
+## 🤝 Want a system like this? Work with OPTTOYSCHINA LLP
 
 We build systems where the hard part is invisible — where a 389,000‑item catalog feels like a landing page, one cached document serves the planet, and performance claims are things you verify in your own browser instead of taking on faith.
 
