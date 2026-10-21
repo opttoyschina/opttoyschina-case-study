@@ -2,18 +2,18 @@
 
 <div align="center">
 
-<img src="docs/img/01-hero-banner.png" alt="OPTTOYSCHINA LLP — engineering case study: a 389,000-SKU marketplace that loads like a landing page" width="900">
+<img src="docs/img/01-hero-banner.png" alt="OPTTOYSCHINA LLP — engineering case study: a 385,000+ SKU marketplace that loads like a landing page" width="900">
 
 <br><br>
 
-# A 389,000‑SKU marketplace that feels like a landing page
+# A 385,000+ SKU marketplace that feels like a landing page
 
-**An engineering case study by OPTTOYSCHINA LLP** — measured, reproducible, and a little obsessive.
+**An engineering case study by ТОО «OPTTOYSCHINA» (OPTTOYSCHINA LLP), BIN 261040024359** — measured, reproducible, and a little obsessive.
 
 <br>
 
 [![Live build](https://img.shields.io/badge/live_build-opttoyschina.com-E87B00?style=for-the-badge)](https://opttoyschina.com)
-[![Catalog](https://img.shields.io/badge/catalog-389%2C000_SKUs-0A0E1C?style=for-the-badge)](https://opttoyschina.com/optom/)
+[![Catalog](https://img.shields.io/badge/catalog-385%2C000%2B_SKUs-0A0E1C?style=for-the-badge)](https://opttoyschina.com/optom/)
 [![Cold sort](https://img.shields.io/badge/cold_sort-9%2C663ms_→_18ms-E87B00?style=for-the-badge)](#-from-96-seconds-to-18-milliseconds)
 
 [![Google PageSpeed](https://img.shields.io/badge/Google_PageSpeed-98%2B_desktop_·_96%2B_mobile-0A0E1C?style=for-the-badge&logo=googlechrome&logoColor=white)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fopttoyschina.com%2F)
@@ -44,7 +44,7 @@
 - [🎯 The one‑word bug: deterministic pagination](#-the-one-word-bug-deterministic-pagination-at-385k-rows)
 - [🔍 Search in 6–15 ms — and it proves it to you](#-search-that-returns-in-615-ms--and-proves-it-to-you)
 - [🌍 One cached HTML for the whole world](#-one-cached-html-for-the-whole-world-geo-neutral-ssr)
-- [🕷️ Crawl engineering: indexing 389,000 pages](#%EF%B8%8F-crawl-engineering-getting-389000-pages-actually-indexed)
+- [🕷️ Crawl engineering: indexing 385,000+ pages](#%EF%B8%8F-crawl-engineering-getting-385000-pages-actually-indexed)
 - [📏 How we measure (the audit, not the anecdote)](#-how-we-actually-measure-the-audit-not-the-anecdote)
 - [📊 Results at a glance](#-results-at-a-glance)
 - [⚡ Postscript: shipping 91 to 96 in one day](#-postscript-shipping-91-to-96-in-one-day)
@@ -75,11 +75,11 @@ If any row describes a fire you're currently fighting, the sections below are th
 
 The client came to us with a deceptively ordinary ask: a B2B catalog for wholesale toy buyers, sourcing direct from Chinese factories, with prices visible up front and order‑from‑one‑box economics. Nothing exotic on the surface.
 
-The exotic part was the shape of the data. Roughly **389,000 products**, a young domain with no accumulated search trust, buyers spread across many countries and currencies, and a hard product requirement that *prices are shown before login*. That combination quietly breaks four things at once:
+The exotic part was the shape of the data. Roughly **385,000 products**, a young domain with no accumulated search trust, buyers spread across many countries and currencies, and a hard product requirement that *prices are shown before login*. That combination quietly breaks four things at once:
 
-1. **Database.** A 389k‑row catalog sorted and filtered on every visit is where naïve schemas fall down.
+1. **Database.** A 385k‑row catalog sorted and filtered on every visit is where naïve schemas fall down.
 2. **Caching.** "Show local currency" plus "cache globally" are, by default, mutually exclusive.
-3. **Crawlability.** A young domain gets a crawl *ration*, not a crawl *budget*. Waste it and 389k pages never get indexed.
+3. **Crawlability.** A young domain gets a crawl *ration*, not a crawl *budget*. Waste it and 385k pages never get indexed.
 4. **Trust.** Open pricing means the numbers on the page **are** the pitch. They have to be instant and consistent, or the value proposition dies on first paint.
 
 The rest of this document is how we closed each of those. Representative SQL and headers below — identifiers sanitized, shapes intact, no secrets. The measurements are from the production system.
@@ -220,7 +220,7 @@ LIMIT 24;
 
 ### Why an SEO team cares about a pagination bug
 
-A shuffling `ORDER BY` doesn't just annoy buyers — it **burns crawl budget**. Every time a crawler re‑fetches `?page=7` and sees different products, it treats the page as changed and re‑crawls it, discovering "new" URLs that are the same products reshuffled. On a young domain with a crawl ration, that phantom churn is how 389k pages stay unindexed. **Determinism is an SEO feature**, not just a correctness one.
+A shuffling `ORDER BY` doesn't just annoy buyers — it **burns crawl budget**. Every time a crawler re‑fetches `?page=7` and sees different products, it treats the page as changed and re‑crawls it, discovering "new" URLs that are the same products reshuffled. On a young domain with a crawl ration, that phantom churn is how 385k pages stay unindexed. **Determinism is an SEO feature**, not just a correctness one.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -230,7 +230,7 @@ A shuffling `ORDER BY` doesn't just annoy buyers — it **burns crawl budget**. 
 
 ### The architecture
 
-Full‑catalog search over 389k SKUs runs as a **cascade**, not a single query — each stage only fires if the cheaper one didn't satisfy:
+Full‑catalog search over 385k SKUs runs as a **cascade**, not a single query — each stage only fires if the cheaper one didn't satisfy:
 
 ```mermaid
 flowchart LR
@@ -264,7 +264,7 @@ We didn't have to expose that. We chose to, because *"trust us, it's fast"* is w
 
 ### 📷 Photograph a toy, find the factory SKU
 
-Text search has a blind spot: you cannot type a shape. A wholesale buyer holding a physical sample — a competitor's bestseller, a supplier's mystery item — has no keyword to start from. So visual search runs **in the browser, on the open mobile web**: open the camera, photograph the toy, and the platform matches it against the 389k‑item catalog — price per unit and per box attached. The visual path shares the same sub‑second budget and folds into the same ranked result set as text. One query language for keywords; one for cameras; one result list.
+Text search has a blind spot: you cannot type a shape. A wholesale buyer holding a physical sample — a competitor's bestseller, a supplier's mystery item — has no keyword to start from. So visual search runs **in the browser, on the open mobile web**: open the camera, photograph the toy, and the platform matches it against the 385k‑item catalog — price per unit and per box attached. The visual path shares the same sub‑second budget and folds into the same ranked result set as text. One query language for keywords; one for cameras; one result list.
 
 <img src="docs/img/04-camera-search.png" alt="In-browser camera search matching a sample to a catalog SKU" width="900">
 
@@ -276,7 +276,7 @@ Text search has a blind spot: you cannot type a shape. A wholesale buyer holding
 
 ### The trap
 
-Buyers span many countries and currencies. The obvious implementation — detect the visitor on the server, render their currency and language — has a fatal property: **every response is unique, so the CDN cannot cache it.** Every visitor pays for a fresh origin render. On a 389k catalog, that's the difference between "instant" and "spinner".
+Buyers span many countries and currencies. The obvious implementation — detect the visitor on the server, render their currency and language — has a fatal property: **every response is unique, so the CDN cannot cache it.** Every visitor pays for a fresh origin render. On a 385k catalog, that's the difference between "instant" and "spinner".
 
 ### The inversion
 
@@ -325,9 +325,9 @@ A crawler hitting from a US IP sees the **neutral default** — and that is corr
 
 ---
 
-## 🕷️ Crawl engineering: getting 389,000 pages actually indexed
+## 🕷️ Crawl engineering: getting 385,000+ pages actually indexed
 
-Building the site is one problem. Getting a search engine to crawl and index 389k pages while the domain is still young is a different one — and it's where most of the surprises live.
+Building the site is one problem. Getting a search engine to crawl and index 385k pages while the domain is still young is a different one — and it's where most of the surprises live.
 
 ### The self‑inflicted 403
 
@@ -440,7 +440,7 @@ When we first published this case study, Google's mobile score was **91** — LC
 
 ## 🤝 Want a system like this? Work with OPTTOYSCHINA LLP
 
-We build systems where the hard part is invisible — where a 389,000‑item catalog feels like a landing page, one cached document serves the planet, and performance claims are things you verify in your own browser instead of taking on faith.
+We build systems where the hard part is invisible — where a 385,000+ item catalog feels like a landing page, one cached document serves the planet, and performance claims are things you verify in your own browser instead of taking on faith.
 
 **If you're a founder or product owner:** you don't have to speak SQL to work with us. You have to want a build where someone reads the query plan before buying a bigger server — and where "it's fast" is a header you can check, not a slide.
 
@@ -451,7 +451,7 @@ We build systems where the hard part is invisible — where a 389,000‑item cat
 <div align="center">
 <br>
 
-**Reference build:** [opttoyschina.com](https://opttoyschina.com) &nbsp;·&nbsp; **Talk to us:** **beket.aitzhanov@gmail.com**
+**Reference build:** [opttoyschina.com](https://opttoyschina.com) &nbsp;·&nbsp; **Talk to us:** **info@opttoyschina.com**
 
 <br>
 </div>
@@ -465,7 +465,7 @@ We build systems where the hard part is invisible — where a 389,000‑item cat
 
 <!--
 IMAGE CHECKLIST (drop real screenshots into docs/img/, keep filenames):
-  01-hero-banner.png            — the orange Prospects Digital hero banner (done)
+  01-hero-banner.png            — the orange OPTTOYSCHINA LLP hero banner (done)
   02-explain-before-after.png   — two real EXPLAIN ANALYZE plans side by side (from your devs)
   03-server-timing-devtools.png — DevTools Network panel showing Server-Timing on a live search
   04-camera-search.png          — in-browser camera / visual search matching a sample to a SKU
